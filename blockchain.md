@@ -131,3 +131,8 @@
 * **Consortium Blockchain**
     > 여러 기관들이 컨소시움을 이뤄 구성하는 블록체인, 허가된 기관만 참여가능
 
+------------------------
+Hyperledger Fabric
+========================
+* **flow**
+![Alt flow_img](./the_ordering_service_delivers_a_transactions_to_the_peers.png)
