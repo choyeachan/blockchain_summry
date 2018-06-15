@@ -285,7 +285,26 @@ Hyperledger Fabric
     |합의 알고리즘|작업증명(PoW)|비작업 증명형(SOLO,Kafka,BFT 등)|
     |결제 완료시간|1분 이상|즉시|
     |멀티블록체이|미지원|지원|
+* 블록체인 구조
 
+    * 구성
+        > * 레저(ledger-block+block) + 전체 상태(world state- vKVS->versioned Key-Value Store)
+
+    * 전체 상태(world state)
+        > * 거래 실행 결과에 따라 변경되는 블록체인의 상태 변화 정보를 저장
+        > * 버전형 키-값 저장소(vKVS-versioned Key-Value Store) 형태로 모델링
+        > * 키(Key) : 체인코드(chaincode)가 사용하는 정보 이름
+        > * 값(value) : 이름에 대응되는 정보
+        > * 버전(version)은 특정 키와 값의 쌍의 상태를 번호(number)로 표시
+        > * 값이 갱신될 때마다 새로운 버전 번호(version number)가 부여되어 기존의 키-값의 쌍의 상태 구분
+        > * 상태 변화의 예 : (car.no = 1234, car.owner = park, car.maker=Hyundai) → (car.no = 1234, car.owner=kim, car.maker=Hyundai)
+        > * 키 버전 변화 : s(car.owner.value)=park), s(car.owner.version)=5) → s(car.owner.value)=kim), s(car.owner.version)=6)
+        > * 전체 상태 = 블록체인의 모든 거래가 접근하는 키 집합에 대한 현재의 갑과 버전 정보 집합
+        
+    * 레저(ledger)
+        > * 시스템 운영 과정에서 발생하는 모든 거래 정보를 해시체인(hash chain) 형태로 저장
+        > * 블록에 포함되는 거래의 수는 응용의 요구사항에 따라 달라질 수 있음
+        > * 레저를 통해 전체 상태 변경의 이력 추적 가능
 
 
 * **flow**
