@@ -288,7 +288,7 @@ Hyperledger Fabric
 * 블록체인 구조
 
     * 구성
-        > * 레저(ledger-block+block) + 전체 상태(world state- vKVS->versioned Key-Value Store)
+        > * 블록체인 = 레저(ledger-block+block) + 전체 상태(world state- vKVS->versioned Key-Value Store)
 
     * 전체 상태(world state)
         > * 거래 실행 결과에 따라 변경되는 블록체인의 상태 변화 정보를 저장
@@ -307,5 +307,35 @@ Hyperledger Fabric
         > * 레저를 통해 전체 상태 변경의 이력 추적 가능
 
 
+* 거리 처리 방식 비교
+    * 기존 블록체인 시스템
+        > * Order → Execute
+    * 하이퍼레저 패브릭 
+        > * Excute(특정노드) → Order → Validate & commit
+        > * 기존 시스템과 차이점  : 실행한 후 결과값을 가지고 순서를 매기고 검증 후 확증
+
+* 기존의 블록체인 시스템
+    > * 대부분 발생한 거래들을 합의 알고리즘을 통해 순서화 시킨 다음 피어(풀 노드)들에게 전달  
+    > * 블록체인을 유지하는 피어에 의해 독립적으로 처리  
+    > * 거래들은 순서가 매겨진 대로 순차적으로 실행  
+    > * 결과가 동일하게 유지되도록 하기 위해 스마트 계약 프로그램은 반드시 결정적으로(deterministically) 작성  
+
+* 하이퍼레저 패브릭의 거래 처리 순서
+    > * 비결정적 프로그램(non-deterministic program) 지원, 거래의 병렬 처리 등을 위해 거리 처리 구조를 변경  
+    > * 실행 → 순서화 → 검증 및 확정의 단계로 처리  
+    > * 클라이언트는 해당 체인코드의 보증 정책에 맞는 보증노드에게 거래를 송신하고, 거래의 실행은 보증 노드에 의해 수행  
+    > * 보증 노드는 거래 실행 결과를 별도의 자료구조(readset:거래를 처리하기 위해 읽은 정보-key,version, writeset:처리결과정보)에 담아 클라이언트에게 회신  
+    > * 보증 노드는 거래 실행 결과를 블록체인에 미적용  
+
+* 요구사항
+    >* 책임성(accountability) 보장
+    >* 프라이버시(privacy) 보장
+
+* 하이퍼레저 패브릭의 PKI 구조
+    * CA (Certificate Authority, 인증기관) - (ex.금융결제원)
+    * ECA : 등록된 사용자 인증
+    * TCA : 거래를 실행할때마다 거래(tx) 인증
+    * TLS_CA : 
+    ![Alt pki_img](./hyperledgerFabric_pki.png)
 * **flow**
 ![Alt flow_img](./the_ordering_service_delivers_a_transactions_to_the_peers.png)
