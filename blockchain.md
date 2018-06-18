@@ -332,10 +332,11 @@ Hyperledger Fabric
     >* 프라이버시(privacy) 보장
 
 * 하이퍼레저 패브릭의 PKI 구조
+    * 사용자가 이용하는 공개키 확인
     * CA (Certificate Authority, 인증기관) - (ex.금융결제원)
     * ECA : 등록된 사용자 인증
     * TCA : 거래를 실행할때마다 거래(tx) 인증
-    * TLS_CA : 
+    * TLS_CA : SSL Standard Version, security 가 보장되는 커넥션을 사용할 때 사용, 상대방을 인증할때 사용하는 인증서  
     ![Alt pki_img](./hyperledgerFabric_pki.png)
 * **flow**
 ![Alt flow_img](./the_ordering_service_delivers_a_transactions_to_the_peers.png)
